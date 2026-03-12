@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kıvanç Çevirici</title>
+    <meta name="description" content="Mesajlarını Kıvanç Miraç Güner tarzına çevir!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-effects">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="avatar">KM</div>
+                <div class="title-group">
+                    <h1>Kıvanç Çevirici</h1>
+                    <p class="subtitle">Mesajını Kıvanç tarzına çevir 🔥</p>
+                </div>
+            </div>
+            <div class="mode-toggle" id="modeToggle">
+                <button class="mode-btn" data-mode="rules" id="btnRules">⚡ Kural</button>
+                <button class="mode-btn active" data-mode="ai" id="btnAI">🤖 AI</button>
+            </div>
+        </header>
+
+        <!-- AI API Key Section -->
+        <div class="api-section hidden" id="apiSection">
+            <div class="api-card">
+                <div class="api-info">
+                    <span class="api-icon">🔑</span>
+                    <div>
+                        <p class="api-title">Groq API Key (Ücretsiz)</p>
+                        <p class="api-desc"><a href="https://console.groq.com/keys"
+                                target="_blank">console.groq.com/keys</a> adresinden ücretsiz al</p>
+                    </div>
+                </div>
+                <input type="password" id="apiKey" placeholder="gsk_..." class="api-input">
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-wrapper">
+                <textarea id="messageInput" placeholder="Mesajını yaz... (örn: Naber nasılsın, yarın buluşalım mı?)"
+                    rows="3"></textarea>
+                <button class="send-btn" id="translateBtn" title="Kıvançlaştır">
+                    <span class="btn-text">Kıvançlaştır</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Examples -->
+        <div class="examples">
+            <p class="examples-title">Hızlı Örnekler:</p>
+            <div class="example-chips">
+                <button class="chip" data-text="Naber nasılsın">Naber nasılsın</button>
+                <button class="chip" data-text="Gel oyun oynayalım">Gel oyun oynayalım</button>
+                <button class="chip" data-text="Yarın buluşalım mı">Yarın buluşalım mı</button>
+                <button class="chip" data-text="Tamam bekle geliyorum">Tamam bekle geliyorum</button>
+                <button class="chip" data-text="Bu çok güzel olmuş">Bu çok güzel olmuş</button>
+                <button class="chip" data-text="Hayır bugün gelemem işim var">Hayır bugün gelemem</button>
+                <button class="chip" data-text="Ekran kartı aldım çok iyi">Ekran kartı aldım çok iyi</button>
+                <button class="chip" data-text="Discord'a gel konuşalım">Discord'a gel konuşalım</button>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section hidden" id="outputSection">
+            <div class="output-header">
+                <div class="output-avatar">KM</div>
+                <div>
+                    <span class="output-name">Kıvanç Miraç Güner</span>
+                    <span class="output-status">çevrildi ✓</span>
+                </div>
+            </div>
+            <div class="messages" id="messagesContainer">
+                <!-- Messages will be injected here -->
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2 class="stats-title">📊 Kıvanç İstatistikleri</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">1-3</span>
+                    <span class="stat-label">Kelime/Mesaj</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">%40</span>
+                    <span class="stat-label">"Aq/Olm" Oranı</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">%25</span>
+                    <span class="stat-label">İngilizce Mix</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">2-5</span>
+                    <span class="stat-label">Mesaj Bölme</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">%0</span>
+                    <span class="stat-label">Noktalama</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">%90</span>
+                    <span class="stat-label">Küçük Harf</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">20+</span>
+                    <span class="stat-label">İng. Cümleler</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">∞</span>
+                    <span class="stat-label">Trol Seviyesi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern Examples -->
+        <div class="patterns-section">
+            <h2 class="patterns-title">🧬 Kıvanç Kalıpları</h2>
+            <div class="pattern-list">
+                <div class="pattern-item">
+                    <span class="pattern-label">Onay:</span>
+                    <span class="pattern-examples">"Ok" · "Tmm" · "He" · "Evt" · "Olr" · "Heeeee"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Red:</span>
+                    <span class="pattern-examples">"Yok" · "Hayır" · "Sanmam" · "Olmaz"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Şaşkınlık:</span>
+                    <span class="pattern-examples">"Oha aq" · "Obaaaa" · "Obaaq" · "O shit"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Seslenme:</span>
+                    <span class="pattern-examples">"Knk" · "Bro" · "Lil bro" · "Zenci" · "Kamkam" · "Aga"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Oyun:</span>
+                    <span class="pattern-examples">"DC gel" · "R6 gel" · "Hunt gel" · "tenis" · "Gelcen mi"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Veda:</span>
+                    <span class="pattern-examples">"Bb" · "Neyse" · "Neyse bb" · "Siktir et"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Sinir:</span>
+                    <span class="pattern-examples">"Aq" · "Olm" · "Yapma aq" · "Niye aq"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">İngilizce:</span>
+                    <span class="pattern-examples">"Trust the process" · "u cooked" · "bruh" · "another goon"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Bekleme:</span>
+                    <span class="pattern-examples">"Bi dk" · "bi on beş dakka bekle" · "gelcem"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Yazım:</span>
+                    <span class="pattern-examples">-iyom · -cem · -cen · "lzm" · "gelcen" · "oynuyom"</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real Examples Section -->
+        <div class="patterns-section">
+            <h2 class="patterns-title">💬 Gerçek Sohbet Örnekleri</h2>
+            <div class="pattern-list">
+                <div class="pattern-item">
+                    <span class="pattern-label">Mesaj Bölme:</span>
+                    <span class="pattern-examples">"Knk" → "Aç" → "Gelim" (3 ayrı mesaj)</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Modeme onarma:</span>
+                    <span class="pattern-examples">"Modeme" → "Restart" → "Atmışlar" → "Geliyorum"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Hava durumu:</span>
+                    <span class="pattern-examples">"Aq" → "Zeus göğü yere indirdi" → "Another" → "Day"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Davet:</span>
+                    <span class="pattern-examples">"Tenis" → "yaa basket" → "yada" → "gelcen mi"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Meşgulken:</span>
+                    <span class="pattern-examples">"Ben" → "Hemen DC gelemem yarım saat 1 saat işim var" → "Uyuma"</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Trol:</span>
+                    <span class="pattern-examples">"Engini" → "Baitliyorum" · "Trust the process" → "ör get lost"</span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Kıvanç Çevirici v1.0 — <em>"Trust the process ör get lost"</em></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
