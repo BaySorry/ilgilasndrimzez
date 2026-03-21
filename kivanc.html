@@ -401,7 +401,11 @@ Ahmet Engin Kaya'nın konuşma tarzının kesin özellikleri:
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 1000,
@@ -411,9 +415,16 @@ Ahmet Engin Kaya'nın konuşma tarzının kesin özellikleri:
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      console.error("API error:", data);
+      outputText.innerHTML = '<span class="error-text">api hata verdi amk. knk tekrar dene</span>';
+      btn.disabled = false;
+      return;
+    }
     const result = data.content?.[0]?.text || "amk bir hata oldu";
     outputText.textContent = result;
   } catch (err) {
+    console.error("Fetch error:", err);
     outputText.innerHTML = '<span class="error-text">amk bir şeyler ters gitti. knk tekrar dene ya</span>';
   }
 
