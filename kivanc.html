@@ -105,7 +105,7 @@
 <div class="container">
   <header>
     <div class="logo">ENGİN<span class="red">TRANSLATE</span></div>
-    <div class="tagline">her cümleyi engin tarzına çevirir • powered by claude ai</div>
+    <div class="tagline">her cümleyi engin tarzına çevirir • powered by gemini ai</div>
   </header>
   <div class="badge">
     <div class="avatar">AEK</div>
@@ -128,12 +128,10 @@
 </div>
 <footer>// engin translator • ctrl+enter ile de çevirirsin //</footer>
 <script>
-// =============================================
-// API KEY'İNİ BURAYA YAZ
-const API_KEY = "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";
-// =============================================
+const API_KEY = "AIzaSyA4kOrSO5GSqrkqZipkO5UYA1VIJo9DESQ";
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY;
 
-const SYSTEM_PROMPT = `Sen Ahmet Engin Kaya'nın konuşma tarzını mükemmel bilen bir çevirmenisin. Kullanıcının yazdığı normal Türkçe metni, Ahmet Engin Kaya'nın tam konuşma tarzına çevireceksin.
+const SYSTEM_PROMPT = `Sen Ahmet Engin Kaya adlı birinin konuşma tarzını mükemmel bilen bir çevirmenisin. Kullanıcının yazdığı normal Türkçe metni, Ahmet Engin Kaya'nın tam konuşma tarzına çevireceksin.
 
 Ahmet Engin Kaya'nın konuşma tarzının kesin özellikleri:
 - Çok kısa ve kesik cümleler. Asla uzun açıklama yapmaz.
@@ -167,26 +165,21 @@ async function translate() {
   outputText.innerHTML = '<div class="loading-row"><div class="dots"><span></span><span></span><span></span></div><span>ÇEVİRİLİYOR</span></div>';
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch(API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: 'Şunu Engin tarzına çevir: "' + input + '"' }],
-      }),
+        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: [{ parts: [{ text: 'Şunu Engin tarzına çevir: "' + input + '"' }] }],
+        generationConfig: { maxOutputTokens: 500, temperature: 0.9 }
+      })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error?.message || 'api hata');
-    outputText.textContent = data.content?.[0]?.text ?? 'amk hata oldu';
+    const result = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    outputText.textContent = result ?? 'amk hata oldu';
   } catch (e) {
-    outputText.innerHTML = '<span class="error">amk bir şeyler ters gitti knk: ' + e.message + '</span>';
+    outputText.innerHTML = '<span class="error">hata knk: ' + e.message + '</span>';
   }
 
   btn.disabled = false;
